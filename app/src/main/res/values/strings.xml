@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Final_Year_Project_1</string>
+    <string name="search">Search</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full_Name</string>
+    <string name="navigation_drawer_open"></string>
+    <string name="navigation_drawer_close"></string>
+    <string name="Email">email</string>
+</resources>

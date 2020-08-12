@@ -9,7 +9,7 @@
     android:background="@color/colorPrimary">
 
     <ImageView
-        android:id="@+id/signup_back_button"
+        android:id="@+id/fav_back_button"
         android:layout_width="42dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleview"
+        android:id="@+id/Fav_recycleview"
         android:layout_width="match_parent"
         android:layout_height="615dp"
         android:padding="20dp"

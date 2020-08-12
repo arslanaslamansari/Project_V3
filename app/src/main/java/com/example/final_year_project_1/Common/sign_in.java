@@ -87,6 +87,7 @@ public class sign_in extends AppCompatActivity {
                             Toast.makeText(sign_in.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), user_Profile.class);
                             startActivity(i);
+                            finish();
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                            // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -150,6 +151,10 @@ public class sign_in extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void back_btn_login(View view) {
 
     }
 }

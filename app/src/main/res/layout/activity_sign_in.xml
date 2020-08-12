@@ -22,7 +22,8 @@
             android:padding="5dp"
             android:layout_marginLeft="-10dp"
             android:src="@drawable/general_back_icon1"
-            android:transitionName="transition_back_arrow_btn" />
+            android:transitionName="transition_back_arrow_btn"
+            android:onClick="back_btn_login"/>
 
 
         <TextView

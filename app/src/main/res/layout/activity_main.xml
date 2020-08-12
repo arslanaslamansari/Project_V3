@@ -52,6 +52,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
             android:layout_marginBottom="20dp"
+            android:padding="10dp"
             android:background="@drawable/black_border"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -85,15 +86,20 @@
             app:srcCompat="@drawable/ic_baseline_mic_24"
             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        <ImageView
+            android:id="@+id/favbutton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.072"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="signupfromhome"/>
+            app:layout_constraintVertical_bias="0.895"
+            app:srcCompat="@drawable/heart"
+            tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

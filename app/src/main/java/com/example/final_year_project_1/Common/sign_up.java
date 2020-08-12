@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_year_project_1.Admin.MainActivity;
+import com.example.final_year_project_1.Admin.user_Profile;
 import com.example.final_year_project_1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -75,118 +76,170 @@ public class sign_up extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
-     /*  if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), user_Profile.class));
             finish();
         }
-
-      */
 
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = user_email.getEditText().getText().toString().trim();
-                String password = user_password.getEditText().getText().toString().trim();
-                final String fullName = full_name.getEditText().getText().toString();
-                final String username = user_name.getEditText().getText().toString();
 
-                if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email is Required.");
-                    return;
-                }
+                if (validateFullName() | validateUsername() | validateEmail() | validatePassword()) {
 
-                if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Required.");
-                    return;
-                }
+                    final String email = user_email.getEditText().getText().toString().trim();
+                    String password = user_password.getEditText().getText().toString().trim();
+                    final String fullName = full_name.getEditText().getText().toString();
+                    final String username = user_name.getEditText().getText().toString();
 
-                if (password.length() < 6) {
-                    mPassword.setError("Password Must be >= 6 Characters");
-                    return;
-                }
 
-                progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
 
-                // register the user in firebase
+                    // register the user in firebase
 
-                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                    fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                            // send verification link
+                                // send verification link
 
-                            FirebaseUser fuser = fAuth.getCurrentUser();
-                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(sign_up.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
-                                }
-                            });
+                                FirebaseUser fuser = fAuth.getCurrentUser();
+                                fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(sign_up.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
+                                    }
+                                });
 
-                            Toast.makeText(sign_up.this, "User Created.", Toast.LENGTH_SHORT).show();
-                            userID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("fName", fullName);
-                            user.put("email", email);
-                            user.put("username", username);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: " + e.toString());
-                                }
-                            });
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                Toast.makeText(sign_up.this, "User Created.", Toast.LENGTH_SHORT).show();
+                                userID = fAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = fStore.collection("users").document(userID);
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("fName", fullName);
+                                user.put("email", email);
+                                user.put("username", username);
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure: " + e.toString());
+                                    }
+                                });
+                                Intent i = new Intent(getApplicationContext(), user_Profile.class);
+                                startActivity(i);
 
-                        } else {
-                            Toast.makeText(sign_up.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(sign_up.this, "Error ! ", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
-
         });
 
 
     }
 
-   /* public void callNextSigupScreen(View view) {
-
-
-        Intent intent = new Intent(this, sign_up_2.class);
-        startActivity(intent);
-
-        //Add Shared Animation
-        Pair[] pairs = new Pair[5];
-        pairs[0] = new Pair<View, String>(backBtn, "transition_back_arrow_btn");
-        pairs[1] = new Pair<View, String>(next, "transition_next_btn");
-        pairs[2] = new Pair<View, String>(login, "transition_login_btn");
-        pairs[3] = new Pair<View, String>(titleText, "transition_title_text");
-        pairs[4] = new Pair<View, String>(slideText, "transition_slide_text");
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(sign_up.this, pairs);
-            startActivity(intent, options.toBundle());
+    private boolean validateFullName() {
+        String val = full_name.getEditText().getText().toString().trim();
+        if (val.isEmpty()) {
+            full_name.setError("Field can not be empty");
+            return false;
         } else {
-
+            full_name.setError(null);
+            full_name.setErrorEnabled(false);
+            return true;
         }
-
-
-
     }
-    */
+
+    private boolean validateUsername() {
+        String val = user_name.getEditText().getText().toString().trim();
+        String checkspaces = "Aw{1,20}z";
+
+        if (val.isEmpty()) {
+            user_name.setError("Field can not be empty");
+            return false;
+        } else if (val.length() > 20) {
+            user_name.setError("Username is too large!");
+            return false;
+        } else if (!val.matches(checkspaces)) {
+            user_name.setError("No White spaces are allowed!");
+            return false;
+        } else {
+            user_name.setError(null);
+            user_name.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateEmail() {
+        String val = user_email.getEditText().getText().toString().trim();
+        String checkEmail = "[a-zA-Z0-9._-]+@[a-z]+.+[a-z]+";
+
+        if (val.isEmpty()) {
+            user_email.setError("Field can not be empty");
+            return false;
+        } else if (!val.matches(checkEmail)) {
+            user_email.setError("Invalid Email!");
+            return false;
+        } else {
+            user_email.setError(null);
+            user_email.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String val = user_password.getEditText().getText().toString().trim();
+        String checkPassword = "^" +
+                //"(?=.*[0-9])" +         //at least 1 digit
+                //"(?=.*[a-z])" +         //at least 1 lower case letter
+                //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                "(?=.*[a-zA-Z])" +      //any letter
+                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
+                "(?=S+$)" +           //no white spaces
+                "$";
+
+        if (val.isEmpty()) {
+            user_password.setError("Field can not be empty");
+            return false;
+        } else if (!val.matches(checkPassword)) {
+            user_password.setError("Password should contain 4 characters!");
+            return false;
+        } else {
+            user_password.setError(null);
+            user_password.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    /*private boolean validatePhoneNumber() {
+        String val = phoneNumber.getEditText().getText().toString().trim();
+        String checkspaces = "Aw{1,20}z";
+        if (val.isEmpty()) {
+            phoneNumber.setError("Enter valid phone number");
+            return false;
+        } else if (!val.matches(checkspaces)) {
+            phoneNumber.setError("No White spaces are allowed!");
+            return false;
+        } else {
+            phoneNumber.setError(null);
+            phoneNumber.setErrorEnabled(false);
+            return true;
+        }
+    }*/
 
     public void callLoginFromSignUp(View view) {
         Intent intent = new Intent(this, sign_in.class);

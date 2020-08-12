@@ -14,6 +14,8 @@
         <activity android:name=".Common.sign_up_2" />
         <activity android:name=".Common.sign_up" />
         <activity android:name=".Admin.user_Profile"/>
+        <activity android:name=".Common.History"/>
+        <activity android:name=".Common.Favorite"/>
         <activity android:name=".Admin.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

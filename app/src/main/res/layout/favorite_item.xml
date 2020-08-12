@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/history_textview"
+        android:id="@+id/Favorite_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"

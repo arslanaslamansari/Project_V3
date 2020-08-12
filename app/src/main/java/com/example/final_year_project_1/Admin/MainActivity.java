@@ -23,10 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.final_year_project_1.Common.AddHistory;
+import com.example.final_year_project_1.Common.AddToFavourite;
+import com.example.final_year_project_1.Common.Favorite;
 import com.example.final_year_project_1.Common.History;
 import com.example.final_year_project_1.Common.sign_in;
 import com.example.final_year_project_1.Common.sign_up;
-import com.example.final_year_project_1.Database.fatchfromfirebabse;
 import com.example.final_year_project_1.Helper_Classes.offline_search_helper_class;
 import com.example.final_year_project_1.Helper_Classes.online_search_helper_class;
 import com.example.final_year_project_1.R;
@@ -53,12 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     EditText editText;
     TextView txvResult;
     Button home_menu;
-    ImageView menu_icon, btn;
+    ImageView menu_icon,favorite_button,btn;
     ProgressDialog dialog;
 
     FirebaseDatabase rootnode;
     DatabaseReference reference;
-
+    String search;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         menu_icon = findViewById(R.id.menu_icon);
-
+        favorite_button=findViewById(R.id.favbutton);
 
         videoView = findViewById(R.id.videoView);
         editText = findViewById(R.id.editText);
@@ -115,9 +118,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String search = editText.getText().toString();
-                    //  onlinesearch();
-                    History history = new History(search);
+                    search = editText.getText().toString();
+
+
+                    AddHistory history = new AddHistory(search);
 
                     //rootnode = FirebaseDatabase.getInstance();
                     //reference = rootnode.getReference("history");
@@ -126,10 +130,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     online_search_helper_class online_object = new online_search_helper_class();
 
-                    videoView.setVideoURI(online_object.search(search));
-                    Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
-                    videoView.requestFocus();
-                    videoView.start();
+                    uri=online_object.search(search);
+
+                    if(uri!=null){
+                        videoView.setVideoURI(uri);
+                        Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
+                        videoView.requestFocus();
+                        videoView.start();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
+                    }
+
+                    favorite_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(uri!=null){
+                                AddToFavourite fav=new AddToFavourite(search);
+                                Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                 }
             });
 
@@ -272,29 +294,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         } else if (item.getItemId() == R.id.nav_fav) {
-            Toast.makeText(this, "We are working on favourite function", LENGTH_SHORT).show();
+            //Toast.makeText(this, "We are working on favourite function", LENGTH_SHORT).show();
+            Intent i = new Intent(this, Favorite.class);
+            startActivity(i);
         } else if (item.getItemId() == R.id.nav_hist) {
-            Toast.makeText(this, "We are working on History function", LENGTH_SHORT).show();
+            //Toast.makeText(this, "We are working on History function", LENGTH_SHORT).show();
+            Intent i = new Intent(this, History.class);
+            startActivity(i);
         } else if (item.getItemId() == R.id.nav_login) {
             Intent i = new Intent(this, sign_in.class);
             startActivity(i);
         } else if (item.getItemId() == R.id.nav_signup) {
             Intent i = new Intent(this, sign_up.class);
             startActivity(i);
-        }
-        else if (item.getItemId() == R.id.nav_profile) {
+        } else if (item.getItemId() == R.id.nav_profile) {
             Intent i = new Intent(this, user_Profile.class);
             startActivity(i);
-        }
-        else
+        } else
             return super.onOptionsItemSelected(item);
 
         return true;
     }
 
+    /*public void addtofavorite(View view) {
 
-    public void signupfromhome(View view) {
-        Intent intent = new Intent(this,sign_up.class);
-        startActivity(intent);
-    }
+    }*/
 }

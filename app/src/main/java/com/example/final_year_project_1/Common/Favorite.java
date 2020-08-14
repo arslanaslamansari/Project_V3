@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.final_year_project_1.Helper_Classes.Favorite_Adapter;
 import com.example.final_year_project_1.Helper_Classes.MyAdapter;
 import com.example.final_year_project_1.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,8 @@ public class Favorite extends AppCompatActivity {
     DatabaseReference reference;
     RecyclerView fav_recyclerView;
     private List<FavoriteData> Favlist;
+    String userId;
+    FirebaseAuth firebaseAuth;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,14 +41,17 @@ public class Favorite extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference().child("favorite");
-        String userId = reference.push().getKey();
+        //String userId = reference.push().getKey();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        userId = firebaseAuth.getCurrentUser().getUid();
 
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Favlist.clear();
-                for(DataSnapshot ds:snapshot.getChildren()){
+                for(DataSnapshot ds:snapshot.child(userId).getChildren()){
                     String Favorite=ds.child("fav").getValue().toString();
                     FavoriteData favoriteData=new FavoriteData(Favorite);
                     Favlist.add(favoriteData);

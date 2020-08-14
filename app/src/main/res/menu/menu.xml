@@ -37,11 +37,6 @@
                     android:title="Login" />
 
                 <item
-                    android:id="@+id/nav_signup"
-
-                    android:title="Signup" />
-
-                <item
                     android:id="@+id/nav_profile"
 
                     android:title="profile" />
@@ -52,14 +47,16 @@
     <item android:title="Communicate">
 
         <menu>
-
+            <item
+                android:id="@+id/nav_help"
+                android:title="Help" />
             <item
                 android:id="@+id/nav_share"
                 android:title="Share" />
 
             <item
-                android:id="@+id/nav_rate"
-                android:title="Rate Us" />
+            android:id="@+id/nav_about"
+            android:title="About Us" />
         </menu>
     </item>
 </menu>

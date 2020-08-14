@@ -75,12 +75,14 @@
 
         <ImageView
             android:id="@+id/btnSpeak"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:onClick="getSpeechInput"
-            app:layout_constraintBottom_toBottomOf="@+id/editText"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editText"
-            app:layout_constraintHorizontal_bias="0.968"
+            app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="@+id/editText"
             app:layout_constraintTop_toTopOf="@+id/editText"
             app:srcCompat="@drawable/ic_baseline_mic_24"
@@ -98,6 +100,30 @@
             app:layout_constraintVertical_bias="0.895"
             app:srcCompat="@drawable/heart"
             tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="54dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="16dp"
+            android:text="Listning"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.915" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

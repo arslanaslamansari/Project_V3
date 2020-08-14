@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     mic_button.setScaleX(1);
                     mic_button.setScaleY(1);
                     speechRecognizer.stopListening();
-                    //textView.setText("ok");
+                    textView.setText("");
                     return true;
                 } else
                     return false;

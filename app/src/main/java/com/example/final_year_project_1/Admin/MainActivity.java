@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         //dialog = new ProgressDialog(MainActivity.this);
         naviagtionDrawer();
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    progressBar.setVisibility(View.VISIBLE);
+                   // progressBar.setVisibility(View.VISIBLE);
 
                     search = editText.getText().toString();
                     AddHistory history = new AddHistory(search);
@@ -270,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     } else {
                         Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
                     }
-                    progressBar.setVisibility(View.GONE);
 
 
                     favorite_button.setOnClickListener(new View.OnClickListener() {

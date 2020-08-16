@@ -57,6 +57,7 @@ public class sign_in extends AppCompatActivity {
         signin_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
 
                 String email = user_email.getEditText().getText().toString().trim();
                 String password = user_password.getEditText().getText().toString().trim();
@@ -86,12 +87,13 @@ public class sign_in extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(sign_in.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), user_Profile.class);
+                            //progressBar.setVisibility(View.GONE);
                             startActivity(i);
                             finish();
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                           // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                           // progressBar.setVisibility(View.GONE);
+                            // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(sign_in.this, "try again", Toast.LENGTH_SHORT).show();
 
                         }
@@ -155,6 +157,6 @@ public class sign_in extends AppCompatActivity {
     }
 
     public void back_btn_login(View view) {
-
+        finish();
     }
 }

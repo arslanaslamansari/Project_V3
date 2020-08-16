@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Common.History"
-    android:background="@color/white">
+    tools:context=".Common.Favorite"
+    android:background="@drawable/background8">
 
     <ImageView
         android:id="@+id/fav_back_button"
@@ -15,6 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:padding="5dp"
+        android:onClick="favoritebackbtn"
         android:src="@drawable/general_back_icon1"
         android:transitionName="transition_back_arrow_btn"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,5 +30,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_back_button" />
+        app:layout_constraintTop_toBottomOf="@+id/fav_back_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

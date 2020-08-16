@@ -86,7 +86,7 @@ public class sign_up extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (validateFullName() | validateUsername() | validateEmail() | validatePassword()) {
+                if (validateFullName() && validateUsername() && validateEmail() && validatePassword()) {
 
                     final String email = user_email.getEditText().getText().toString().trim();
                     String password = user_password.getEditText().getText().toString().trim();
@@ -136,9 +136,10 @@ public class sign_up extends AppCompatActivity {
                                         Log.d(TAG, "onFailure: " + e.toString());
                                     }
                                 });
+
                                 Intent i = new Intent(getApplicationContext(), user_Profile.class);
                                 startActivity(i);
-
+                                finish();
                             } else {
                                 Toast.makeText(sign_up.this, "Error ! ", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
@@ -165,17 +166,20 @@ public class sign_up extends AppCompatActivity {
     }
 
     private boolean validateUsername() {
-        String val = user_name.getEditText().getText().toString().trim();
-        String checkspaces = "Aw{1,20}z";
+        String val = user_name.getEditText().getText().toString();
+        String noWhiteSpace = "\\A\\w{4,20}\\z";
 
         if (val.isEmpty()) {
-            user_name.setError("Field can not be empty");
+            user_name.setError("Field cannot be empty");
             return false;
-        } else if (val.length() > 20) {
-            user_name.setError("Username is too large!");
+        } else if (val.length() >= 15) {
+            user_name.setError("Username too long");
             return false;
-        } else if (!val.matches(checkspaces)) {
-            user_name.setError("No White spaces are allowed!");
+        } else if (val.length() <= 4) {
+            user_name.setError("Username too short");
+            return false;
+        } else if (!val.matches(noWhiteSpace)) {
+            user_name.setError("White Spaces are not allowed");
             return false;
         } else {
             user_name.setError(null);
@@ -185,14 +189,14 @@ public class sign_up extends AppCompatActivity {
     }
 
     private boolean validateEmail() {
-        String val = user_email.getEditText().getText().toString().trim();
-        String checkEmail = "[a-zA-Z0-9._-]+@[a-z]+.+[a-z]+";
+        String val = user_email.getEditText().getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (val.isEmpty()) {
-            user_email.setError("Field can not be empty");
+            user_email.setError("Field cannot be empty");
             return false;
-        } else if (!val.matches(checkEmail)) {
-            user_email.setError("Invalid Email!");
+        } else if (!val.matches(emailPattern)) {
+            user_email.setError("Invalid email address");
             return false;
         } else {
             user_email.setError(null);
@@ -202,21 +206,21 @@ public class sign_up extends AppCompatActivity {
     }
 
     private boolean validatePassword() {
-        String val = user_password.getEditText().getText().toString().trim();
-        String checkPassword = "^" +
+        String val = user_password.getEditText().getText().toString();
+        String passwordVal = "^" +
                 //"(?=.*[0-9])" +         //at least 1 digit
                 //"(?=.*[a-z])" +         //at least 1 lower case letter
                 //"(?=.*[A-Z])" +         //at least 1 upper case letter
                 "(?=.*[a-zA-Z])" +      //any letter
-                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=S+$)" +           //no white spaces
+                "(?=\\S+$)" +           //no white spaces
+                ".{6,}" +               //at least 6 characters
                 "$";
 
         if (val.isEmpty()) {
-            user_password.setError("Field can not be empty");
+            user_password.setError("Field cannot be empty");
             return false;
-        } else if (!val.matches(checkPassword)) {
-            user_password.setError("Password should contain 4 characters!");
+        } else if (!val.matches(passwordVal)) {
+            user_password.setError("Password is too weak");
             return false;
         } else {
             user_password.setError(null);
@@ -225,26 +229,9 @@ public class sign_up extends AppCompatActivity {
         }
     }
 
-    /*private boolean validatePhoneNumber() {
-        String val = phoneNumber.getEditText().getText().toString().trim();
-        String checkspaces = "Aw{1,20}z";
-        if (val.isEmpty()) {
-            phoneNumber.setError("Enter valid phone number");
-            return false;
-        } else if (!val.matches(checkspaces)) {
-            phoneNumber.setError("No White spaces are allowed!");
-            return false;
-        } else {
-            phoneNumber.setError(null);
-            phoneNumber.setErrorEnabled(false);
-            return true;
-        }
-    }*/
-
-    public void callLoginFromSignUp(View view) {
-        Intent intent = new Intent(this, sign_in.class);
+    public void signup_back_button(View view) {
+        Intent intent = new Intent(sign_up.this, sign_in.class);
         startActivity(intent);
-
     }
 
 

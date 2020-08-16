@@ -1,6 +1,7 @@
 package com.example.final_year_project_1.Common;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -122,6 +123,10 @@ public class History extends AppCompatActivity {
                 Toast.makeText(History.this, "Opsss.... Something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void historybackbtn(View view) {
+        finish();
     }
 
     /*    public void Add_History(String text) {

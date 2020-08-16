@@ -1,10 +1,9 @@
 package com.example.final_year_project_1.Admin;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -34,9 +32,7 @@ import com.example.final_year_project_1.Common.AddHistory;
 import com.example.final_year_project_1.Common.AddToFavourite;
 import com.example.final_year_project_1.Common.Favorite;
 import com.example.final_year_project_1.Common.History;
-import com.example.final_year_project_1.Common.Navigatiion_Drawer;
 import com.example.final_year_project_1.Common.sign_in;
-import com.example.final_year_project_1.Common.sign_up;
 import com.example.final_year_project_1.Helper_Classes.offline_search_helper_class;
 import com.example.final_year_project_1.Helper_Classes.online_search_helper_class;
 import com.example.final_year_project_1.R;
@@ -59,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected NavigationView navigationView;
     Toolbar toolbar;
     Menu menu;
-    TextView textView;
+    TextView textView, Network_status;
+    View natworkstarus_background;
 
     //TextView textView;
     VideoView videoView;
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FirebaseDatabase rootnode;
     DatabaseReference reference;
-    String search;
+    String search="";
     Uri uri;
 
     ProgressBar progressBar;
@@ -103,14 +100,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mic_button = findViewById(R.id.btnSpeak);
         //mic_button1 = findViewById(R.id.btnSpeak1);
         textView = findViewById(R.id.textView);
+        Network_status = findViewById(R.id.netorkstatus);
+        natworkstarus_background = findViewById(R.id.view2);
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+        progressBar = findViewById(R.id.mainactivitypb);
 
         //dialog = new ProgressDialog(MainActivity.this);
         naviagtionDrawer();
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (connected(MainActivity.this)) {
+                    search = editText.getText().toString().trim();
+                    Toast.makeText(MainActivity.this, "you're in online mode", LENGTH_SHORT).show();
+                    online_search(search);
+
+                } else if (!connected(MainActivity.this)) {
+                    Toast.makeText(MainActivity.this, "you're in offline mode", LENGTH_SHORT).show();
+                    offline_search();
+                }
+            }
+        });
+
+        favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (connected(MainActivity.this)) {
+                    if (fAuth.getCurrentUser() != null) {
+                        if (!search.isEmpty()) {
+                            if(uri!=null){
+                                AddToFavourite fav = new AddToFavourite(search);
+                                Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
+                            }
+                        } else {
+
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Please login to use this function", LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "you must be Connected to internet", LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizerintent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -120,13 +161,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
-                Toast.makeText(getApplicationContext(), "ready", LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "ready", LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onBeginningOfSpeech() {
-                Toast.makeText(getApplicationContext(), "begning", LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "begning", LENGTH_SHORT).show();
 
             }
 
@@ -142,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onEndOfSpeech() {
-                Toast.makeText(getApplicationContext(), "end", LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "end", LENGTH_SHORT).show();
 
             }
 
@@ -159,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (matches != null) {
                     keeper = matches.get(0);
                     //textView.setText(keeper);
+                    online_search(keeper);
                     Toast.makeText(getApplicationContext(), "result" + keeper, LENGTH_SHORT).show();
                 }
             }
@@ -216,6 +258,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void offline_search() {
+        search = editText.getText().toString().trim();
+        offline_search_helper_class object = new offline_search_helper_class();
+
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + object.search(search)));
+        videoView.requestFocus();
+        videoView.start();
+    }
+
+    private void online_search(String onlinesearch) {
+
+
+        if (fAuth.getCurrentUser() != null) {
+            AddHistory history = new AddHistory(onlinesearch);
+        }
+
+        //rootnode = FirebaseDatabase.getInstance();
+        //reference = rootnode.getReference("history");
+        //reference.setValue(search);
+        //  Toast.makeText(getApplicationContext(), "Done", LENGTH_SHORT).show();
+
+        if (onlinesearch.isEmpty()) {
+        }
+        else {
+            progressBar.setVisibility(View.VISIBLE);
+            online_search_helper_class online_object = new online_search_helper_class();
+            uri = online_object.search(onlinesearch);
+
+            if (uri != null) {
+                videoView.setVideoURI(uri);
+                Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
+                videoView.requestFocus();
+                videoView.start();
+
+                //http://www.quicktips.in/how-to-show-progressbar-while-loading-a-video-in-android-videoview/
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        // TODO Auto-generated method stub
+                        mp.start();
+                        mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                            @Override
+                            public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
+                                // TODO Auto-generated method stub
+                                progressBar.setVisibility(View.GONE);
+                                mp.start();
+                            }
+                        });
+                    }
+                });
+
+            }
+            else {
+                uri=null;
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -226,108 +328,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (!connected(this)) {
-
-            Toast.makeText(this, "you're in offline mode", LENGTH_SHORT).show();
-
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //offlinesearch();
-
-                    String search = editText.getText().toString();
-                    offline_search_helper_class object = new offline_search_helper_class();
-
-                    videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + object.search(search)));
-                    videoView.requestFocus();
-                    videoView.start();
-                }
-            });
-
-        } else {
-            Toast.makeText(this, "you're in online mode", LENGTH_SHORT).show();
-
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                   // progressBar.setVisibility(View.VISIBLE);
-
-                    search = editText.getText().toString();
-                    AddHistory history = new AddHistory(search);
-
-                    //rootnode = FirebaseDatabase.getInstance();
-                    //reference = rootnode.getReference("history");
-                    //reference.setValue(search);
-                    //  Toast.makeText(getApplicationContext(), "Done", LENGTH_SHORT).show();
-
-                    online_search_helper_class online_object = new online_search_helper_class();
-
-                    uri = online_object.search(search);
-
-                    if (uri != null) {
-                        videoView.setVideoURI(uri);
-                        Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
-                        videoView.requestFocus();
-                        videoView.start();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
-                    }
-
-
-                    favorite_button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (uri != null) {
-                                AddToFavourite fav = new AddToFavourite(search);
-                                Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-                }
-            });
-
-        }
-
-    }
-
-   /* private void onlinesearch() {
-        String search = editText.getText().toString();
-        if (search.equals("a")) {
-            videoView.setVideoURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/alif.mp4?alt=media&token=0500b878-f1dd-40dc-9186-ba7438af33e8"));
-            videoView.start();
-        } else if (search.equals("b")) {
-            videoView.setVideoURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/bay.mp4?alt=media&token=794a7f1b-faf4-4838-aa72-629b60cf4460"));
-            videoView.start();
-        } else if (search.equals("c")) {
-            dialog.setMessage("please wait.");
-            dialog.show();
+            Network_status.setVisibility(View.VISIBLE);
+            natworkstarus_background.setVisibility(View.VISIBLE);
+        } else if (connected(this)) {
+            Network_status.setVisibility(View.GONE);
+            natworkstarus_background.setVisibility(View.GONE);
         }
     }
 
-    */
-
-
-    private void offlinesearch() {
-
-        String search = editText.getText().toString();
-        offline_search_helper_class object = new offline_search_helper_class();
-
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + object.search(search)));
-        videoView.requestFocus();
-        videoView.start();
-
-       /* if (search.equals("a")) {
-            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.alif));
-            videoView.requestFocus();
-            videoView.start();
-        } else if (search.equals("b")) {
-            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bay));
-            videoView.requestFocus();
-            videoView.start();
-        }
-
-        */
-    }
 
     private boolean connected(MainActivity mainActivity) {
         ConnectivityManager connectivityManager = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);

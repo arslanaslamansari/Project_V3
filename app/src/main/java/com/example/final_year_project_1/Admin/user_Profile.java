@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 public class user_Profile extends AppCompatActivity {
 
     private static final int GALLERY_INTENT_CODE = 1023;
-    TextView fullName, email, phone, verifyMsg;
+    TextView fullName, email, phone, verifyMsg, username;
     FirebaseAuth fAuth;
     //FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseFirestore fStore;
@@ -57,9 +57,9 @@ public class user_Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        phone = findViewById(R.id.profilePhone);
-        fullName = findViewById(R.id.profileName);
-        email = findViewById(R.id.profileEmail);
+        username = findViewById(R.id.username);
+        fullName = findViewById(R.id.Name);
+        email = findViewById(R.id.email);
 
         profileImage = findViewById(R.id.profileImage);
         //fullName.setText("ok");
@@ -104,30 +104,31 @@ public class user_Profile extends AppCompatActivity {
 
 
 //email not verified
-        /*if(!user.isEmailVerified()){
-            verifyMsg.setVisibility(View.VISIBLE);
-            resendCode.setVisibility(View.VISIBLE);
+        if (firebaseUser != null) {
 
-            resendCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
+            if (!user.isEmailVerified()) {
+                verifyMsg.setVisibility(View.VISIBLE);
+                resendCode.setVisibility(View.VISIBLE);
 
-                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(v.getContext(), "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("tag", "onFailure: Email not sent " + e.getMessage());
-                        }
-                    });
-                }
-            });
+                resendCode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+
+                        user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(v.getContext(), "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("tag", "onFailure: Email not sent " + e.getMessage());
+                            }
+                        });
+                    }
+                });
+            }
         }
-        */
-
 
     }
 
@@ -161,11 +162,12 @@ public class user_Profile extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             //String title = documentSnapshot.getString(KEY_TITLE);
-                           // String description = documentSnapshot.getString(KEY_DESCRIPTION);
+                            // String description = documentSnapshot.getString(KEY_DESCRIPTION);
                             //Map<String, Object> note = documentSnapshot.getData();
                             //textViewData.setText("Title: " + title + "\n" + "Description: " + description);
                             fullName.setText(documentSnapshot.getString("fName"));
                             email.setText(documentSnapshot.getString("email"));
+                            username.setText(documentSnapshot.getString("username"));
                         } else {
                             Toast.makeText(user_Profile.this, "Document does not exist", Toast.LENGTH_SHORT).show();
                         }
@@ -185,43 +187,7 @@ public class user_Profile extends AppCompatActivity {
             super.onResume();
             fAuth.addAuthStateListener(mAuthListener);
         }*/
-    /*public void change_password(View view) {
-        final EditText resetPassword = new EditText(view.getContext());
 
-        final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
-        passwordResetDialog.setTitle("Reset Password ?");
-        passwordResetDialog.setMessage("Enter New Password > 6 Characters long.");
-        passwordResetDialog.setView(resetPassword);
-
-        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // extract the email and send reset link
-                String newPassword = resetPassword.getText().toString();
-                user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Password Reset Successfully.", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Password Reset Failed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // close
-            }
-        });
-
-        passwordResetDialog.create().show();
-
-    }*/
 
     public void logout(View view) {
         finish();

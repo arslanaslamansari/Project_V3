@@ -4,20 +4,22 @@
     android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    android:padding="20dp">
+    android:background="@drawable/toolbar"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp">
 
     <ImageView
-        android:layout_marginTop="20dp"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/applogo1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SIGN LANGUAGE"
-        android:textSize="24sp"
+        android:text="Talking Hands"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
         android:textColor="@color/black"
         app:fontFamily="@font/montserrat_bold" />
 
@@ -26,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Learn Pakistani Sign Language"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:fontFamily="@font/montserrat" />
 
 </LinearLayout>

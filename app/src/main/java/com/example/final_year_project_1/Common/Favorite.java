@@ -1,6 +1,7 @@
 package com.example.final_year_project_1.Common;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,5 +67,9 @@ public class Favorite extends AppCompatActivity {
                 Toast.makeText(Favorite.this, "Opsss.... Something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void favoritebackbtn(View view) {
+        finish();
     }
 }

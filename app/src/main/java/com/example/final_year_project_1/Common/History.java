@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class History extends AppCompatActivity {
         setContentView(R.layout.history);
         recyclerView = findViewById(R.id.recycleview);
         list = new ArrayList<HistoryData>();
+
 
         //LinearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

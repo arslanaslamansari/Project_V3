@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Intent speechRecognizerintent;
     private String keeper = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -271,7 +272,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (fAuth.getCurrentUser() != null) {
-            AddHistory history = new AddHistory(onlinesearch);
+            if(!onlinesearch.isEmpty()) {
+                AddHistory history = new AddHistory(onlinesearch);
+            }
         }
 
         //rootnode = FirebaseDatabase.getInstance();

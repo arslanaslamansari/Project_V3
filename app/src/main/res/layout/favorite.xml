@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Common.Favorite"
-    android:background="@drawable/background8">
-
+    android:background="@color/lightwhite">
+    
     <ImageView
         android:id="@+id/fav_back_button"
         android:layout_width="42dp"

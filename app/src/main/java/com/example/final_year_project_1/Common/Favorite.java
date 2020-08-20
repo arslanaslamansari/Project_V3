@@ -2,6 +2,7 @@ package com.example.final_year_project_1.Common;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,10 +32,12 @@ public class Favorite extends AppCompatActivity {
     String userId;
     FirebaseAuth firebaseAuth;
 
-    protected void onCreate(Bundle savedInstanceState){
+    //ImageView btn;
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite);
         fav_recyclerView = findViewById(R.id.Fav_recycleview);
+        //btn=findViewById(R.id.deletefavorite)
         Favlist = new ArrayList<FavoriteData>();
 
 
@@ -52,12 +55,13 @@ public class Favorite extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Favlist.clear();
-                for(DataSnapshot ds:snapshot.child(userId).getChildren()){
-                    String Favorite=ds.child("fav").getValue().toString();
-                    FavoriteData favoriteData=new FavoriteData(Favorite);
+                for (DataSnapshot ds : snapshot.child(userId).getChildren()) {
+                    String Favorite = ds.child("fav").getValue().toString();
+                    String uri = ds.child("uri").getValue().toString();
+                    FavoriteData favoriteData = new FavoriteData(Favorite, uri);
                     Favlist.add(favoriteData);
                 }
-                Favorite_Adapter favadapter=new Favorite_Adapter(Favlist,Favorite.this);
+                Favorite_Adapter favadapter = new Favorite_Adapter(Favlist, Favorite.this);
                 fav_recyclerView.setAdapter(favadapter);
             }
 
@@ -69,7 +73,27 @@ public class Favorite extends AppCompatActivity {
         });
     }
 
+    /*public void deletefav(final String name) {
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                     @Override
+                                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                                         for (DataSnapshot ds: dataSnapshot.child(userId).getChildren()) {
+                                                            // appleSnapshot.getRef().removeValue();
+
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public void onCancelled(DatabaseError databaseError) {
+                                                         //  Log.e(TAG, "onCancelled", databaseError.toException());
+                                                     }
+                                                 });
+//        Toast.makeText(Favorite.this, "Opsss.... Something is wrong", Toast.LENGTH_SHORT).show();
+    }*/
+
     public void favoritebackbtn(View view) {
+
         finish();
     }
 }

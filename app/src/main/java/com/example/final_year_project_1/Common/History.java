@@ -2,6 +2,7 @@ package com.example.final_year_project_1.Common;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class History extends AppCompatActivity {
     FirebaseAuth fauth;
     String userId;
     FirebaseAuth firebaseAuth;
+    ImageView deleteBtn;
 
     //FirebaseDatabase firebaseDatabase;
     /*tetorial
@@ -48,6 +50,7 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
         recyclerView = findViewById(R.id.recycleview);
+        deleteBtn=findViewById(R.id.history_delete_btn);
         list = new ArrayList<HistoryData>();
 
 
@@ -81,50 +84,21 @@ public class History extends AppCompatActivity {
                 MyAdapter myAdapter = new MyAdapter(list, History.this);
                 recyclerView.setAdapter(myAdapter);
             }
-/*noteRef.get()
-
-            addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess (DocumentSnapshot documentSnapshot){
-                    if (documentSnapshot.exists()) {
-                        //String title = documentSnapshot.getString(KEY_TITLE);
-                        // String description = documentSnapshot.getString(KEY_DESCRIPTION);
-                        //Map<String, Object> note = documentSnapshot.getData();
-                        //textViewData.setText("Title: " + title + "\n" + "Description: " + description);
-                        fullName.setText(documentSnapshot.getString("fName"));
-                        email.setText(documentSnapshot.getString("email"));
-                    } else {
-                        Toast.makeText(user_Profile.this, "Document does not exist", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-                    .
-
-            addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure (@NonNull Exception e){
-                    Toast.makeText(user_Profile.this, "Error!", Toast.LENGTH_SHORT).show();
-                }
-            });*/
-            //https://www.javatpoint.com/android-recyclerview-list-example
-          /*@Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
-                {
-                   // HistoryData historyData= dataSnapshot1.getValue(HistoryData.class);
-                   // list.add(historyData);
-                    Toast.makeText(History.this, "Done", Toast.LENGTH_SHORT).show();
-
-                }
-                MyAdapter adapter = new MyAdapter(list,History.this);
-                recyclerView.setAdapter(adapter);
-            }*/
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(History.this, "Opsss.... Something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reference.child(userId).removeValue();
+            }
+        });
+
+
     }
 
     public void historybackbtn(View view) {

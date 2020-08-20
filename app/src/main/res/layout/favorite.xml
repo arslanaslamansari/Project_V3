@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Common.Favorite"
     android:background="@color/lightwhite">
-    
+
+
     <ImageView
         android:id="@+id/fav_back_button"
         android:layout_width="42dp"
@@ -19,16 +20,20 @@
         android:src="@drawable/general_back_icon1"
         android:transitionName="transition_back_arrow_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Fav_recycleview"
         android:layout_width="match_parent"
-        android:layout_height="615dp"
-        android:padding="20dp"
+        android:layout_height="583dp"
+        android:padding="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fav_back_button" />
+        app:layout_constraintTop_toBottomOf="@+id/fav_back_button"
+        app:layout_constraintVertical_bias="0.9" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,6 +46,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.widget.Toast.*;
 
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (fAuth.getCurrentUser() != null) {
                         if (!search.isEmpty()) {
                             if(uri!=null){
-                                AddToFavourite fav = new AddToFavourite(search);
+                                AddToFavourite fav = new AddToFavourite(search,uri.toString());
                                 Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
                             }
                         } else {
@@ -143,11 +146,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Please login to use this function", LENGTH_SHORT).show();
+                        new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                                .setTitleText("Login to Use this feature")
+                                .show();
 
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "you must be Connected to internet", LENGTH_SHORT).show();
+                    new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("Online Mode to use this feature")
+                            .show();
 
                 }
             }
@@ -286,6 +293,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else {
             progressBar.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
             online_search_helper_class online_object = new online_search_helper_class();
             uri = online_object.search(onlinesearch);
 
@@ -306,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
                                 // TODO Auto-generated method stub
                                 progressBar.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 mp.start();
                             }
                         });
@@ -373,9 +384,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
 
         if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+            navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else
+        } else {
             super.onBackPressed();
+        }
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
 
@@ -436,8 +451,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent i = new Intent(this, Favorite.class);
                 startActivity(i);
             } else {
-                Intent i = new Intent(this, sign_in.class);
-                startActivity(i);
+                /*Intent i = new Intent(this, sign_in.class);
+                startActivity(i);*/
+                new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Login to Use this feature")
+                        .show();
             }
 
 
@@ -447,8 +465,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent i = new Intent(this, History.class);
                 startActivity(i);
             } else {
-                Intent i = new Intent(this, sign_in.class);
-                startActivity(i);
+                /*Intent i = new Intent(this, sign_in.class);
+                startActivity(i);*/
+                new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Login to Use this feature")
+                        .show();
             }
 
         } else if (item.getItemId() == R.id.nav_login) {

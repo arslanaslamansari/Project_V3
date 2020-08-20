@@ -95,6 +95,7 @@ public class sign_up extends AppCompatActivity {
 
 
                     progressBar.setVisibility(View.VISIBLE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                     // register the user in firebase
 
@@ -143,6 +144,8 @@ public class sign_up extends AppCompatActivity {
                             } else {
                                 Toast.makeText(sign_up.this, "Error ! ", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                             }
                         }
                     });

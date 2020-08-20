@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -58,6 +59,7 @@ public class sign_in extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                 String email = user_email.getEditText().getText().toString().trim();
                 String password = user_password.getEditText().getText().toString().trim();
@@ -88,12 +90,15 @@ public class sign_in extends AppCompatActivity {
                             Toast.makeText(sign_in.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), user_Profile.class);
                             //progressBar.setVisibility(View.GONE);
+
                             startActivity(i);
                             finish();
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                             Toast.makeText(sign_in.this, "try again", Toast.LENGTH_SHORT).show();
 
                         }

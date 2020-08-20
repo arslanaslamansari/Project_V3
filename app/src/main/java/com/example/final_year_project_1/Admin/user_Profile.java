@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -61,11 +62,9 @@ public class user_Profile extends AppCompatActivity {
         fullName = findViewById(R.id.Name);
         email = findViewById(R.id.email);
 
-        profileImage = findViewById(R.id.profileImage);
         //fullName.setText("ok");
 
         resendCode = findViewById(R.id.resendCode);
-        verifyMsg = findViewById(R.id.verifyMsg);
         //logout_btn=findViewById(R.id.logoutbutton);
 
         fAuth = FirebaseAuth.getInstance();
@@ -107,7 +106,6 @@ public class user_Profile extends AppCompatActivity {
         if (firebaseUser != null) {
 
             if (!user.isEmailVerified()) {
-                verifyMsg.setVisibility(View.VISIBLE);
                 resendCode.setVisibility(View.VISIBLE);
 
                 resendCode.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +191,10 @@ public class user_Profile extends AppCompatActivity {
         finish();
         FirebaseAuth.getInstance().signOut();//logout
         //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    public void profile_backbtn(View view){
+        finish();
     }
 
 

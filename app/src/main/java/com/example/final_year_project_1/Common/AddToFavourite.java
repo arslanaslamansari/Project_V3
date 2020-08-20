@@ -1,6 +1,7 @@
 package com.example.final_year_project_1.Common;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,8 @@ public class AddToFavourite {
     DatabaseReference reference;
     FirebaseAuth firebaseAuth;
 
-    public AddToFavourite(final String text) {
-        FavoriteData u = new FavoriteData(text);
+    public AddToFavourite(final String text, String uri) {
+        FavoriteData u = new FavoriteData(text,uri);
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -28,5 +29,6 @@ public class AddToFavourite {
         reference = database.getReference().child("favorite");
         String key = reference.push().getKey();
         reference.child(userId).child(text).setValue(u);
+
     }
 }

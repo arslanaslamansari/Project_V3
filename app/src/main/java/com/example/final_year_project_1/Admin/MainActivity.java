@@ -1,12 +1,15 @@
 package com.example.final_year_project_1.Admin;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -33,6 +36,7 @@ import com.example.final_year_project_1.Common.AddHistory;
 import com.example.final_year_project_1.Common.AddToFavourite;
 import com.example.final_year_project_1.Common.Favorite;
 import com.example.final_year_project_1.Common.History;
+import com.example.final_year_project_1.Common.about_us;
 import com.example.final_year_project_1.Common.sign_in;
 import com.example.final_year_project_1.Helper_Classes.offline_search_helper_class;
 import com.example.final_year_project_1.Helper_Classes.online_search_helper_class;
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FirebaseDatabase rootnode;
     DatabaseReference reference;
-    String search="";
+    String search = "";
     Uri uri;
 
     ProgressBar progressBar;
@@ -121,11 +125,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 if (connected(MainActivity.this)) {
                     search = editText.getText().toString().trim();
-                    Toast.makeText(MainActivity.this, "you're in online mode", LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "you're in online mode", LENGTH_SHORT).show();
                     online_search(search);
 
                 } else if (!connected(MainActivity.this)) {
-                    Toast.makeText(MainActivity.this, "you're in offline mode", LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "you're in offline mode", LENGTH_SHORT).show();
                     offline_search();
                 }
             }
@@ -137,22 +141,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (connected(MainActivity.this)) {
                     if (fAuth.getCurrentUser() != null) {
                         if (!search.isEmpty()) {
-                            if(uri!=null){
-                                AddToFavourite fav = new AddToFavourite(search,uri.toString());
+                            if (uri != null) {
+                                AddToFavourite fav = new AddToFavourite(search, uri.toString());
                                 Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
+                                favorite_button.setClickable(false);
                             }
                         } else {
 
                         }
-                    }
-                    else{
-                        new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                    } else {
+                        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                                 .setTitleText("Login to Use this feature")
                                 .show();
 
                     }
                 } else {
-                    new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                             .setTitleText("Online Mode to use this feature")
                             .show();
 
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onError(int i) {
-                Toast.makeText(getApplicationContext(), "error", LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "error", LENGTH_SHORT).show();
 
             }
 
@@ -209,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     keeper = matches.get(0);
                     //textView.setText(keeper);
                     online_search(keeper);
-                    Toast.makeText(getApplicationContext(), "result" + keeper, LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "result" + keeper, LENGTH_SHORT).show();
                 }
             }
 
@@ -279,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (fAuth.getCurrentUser() != null) {
-            if(!onlinesearch.isEmpty()) {
+            if (!onlinesearch.isEmpty()) {
                 AddHistory history = new AddHistory(onlinesearch);
             }
         }
@@ -290,8 +294,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //  Toast.makeText(getApplicationContext(), "Done", LENGTH_SHORT).show();
 
         if (onlinesearch.isEmpty()) {
-        }
-        else {
+        } else {
             progressBar.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -301,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if (uri != null) {
                 videoView.setVideoURI(uri);
-                Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
                 videoView.requestFocus();
                 videoView.start();
 
@@ -316,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
                                 // TODO Auto-generated method stub
                                 progressBar.setVisibility(View.GONE);
+                                favorite_button.setVisibility(View.VISIBLE);
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 mp.start();
                             }
@@ -323,11 +327,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-            }
-            else {
-                uri=null;
+            } else {
+                uri = null;
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
+                new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Sign Not Available")
+                        .show();
+                //Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
             }
         }
     }
@@ -340,14 +346,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         videoView.requestFocus();
         videoView.start();
 
-
-        if (!connected(this)) {
-            Network_status.setVisibility(View.VISIBLE);
-            natworkstarus_background.setVisibility(View.VISIBLE);
-        } else if (connected(this)) {
-            Network_status.setVisibility(View.GONE);
-            natworkstarus_background.setVisibility(View.GONE);
-        }
     }
 
 
@@ -453,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 /*Intent i = new Intent(this, sign_in.class);
                 startActivity(i);*/
-                new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                         .setTitleText("Login to Use this feature")
                         .show();
             }
@@ -467,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 /*Intent i = new Intent(this, sign_in.class);
                 startActivity(i);*/
-                new SweetAlertDialog(MainActivity.this,SweetAlertDialog.NORMAL_TYPE)
+                new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                         .setTitleText("Login to Use this feature")
                         .show();
             }
@@ -485,13 +483,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (item.getItemId() == R.id.nav_profile) {
             Intent i = new Intent(this, user_Profile.class);
             startActivity(i);
-        } else
+        } else if (item.getItemId() == R.id.nav_about) {
+            Intent i = new Intent(this, about_us.class);
+            startActivity(i);
+        }
+        else
             return super.onOptionsItemSelected(item);
 
         return true;
     }
 
-    /*public void addtofavorite(View view) {
 
-    }*/
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wifiStateReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(wifiStateReceiver);
+    }
+
+    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            /*ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo wificon = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobcon = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);*/
+
+            if (connected(MainActivity.this)) {
+                //Toast.makeText(getApplicationContext(), "wifi enabled", LENGTH_SHORT).show();
+                Network_status.setVisibility(View.GONE);
+                natworkstarus_background.setVisibility(View.GONE);
+
+            } else {
+                // Toast.makeText(getApplicationContext(), "wifi disabled", LENGTH_SHORT).show();
+                Network_status.setVisibility(View.VISIBLE);
+                natworkstarus_background.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 }

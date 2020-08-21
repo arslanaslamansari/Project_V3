@@ -55,7 +55,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.FavV
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(context, Fav_Item_videoplayer.class);
                 i.putExtra("VideoUri", uri);

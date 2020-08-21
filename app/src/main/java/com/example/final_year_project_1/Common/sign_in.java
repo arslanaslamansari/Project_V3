@@ -28,6 +28,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class sign_in extends AppCompatActivity {
     // EditText user_email,user_password;
     Button signin_Btn, signup_btn, forgot_password;
@@ -121,12 +123,14 @@ public class sign_in extends AppCompatActivity {
             public void onClick(View v) {
 
                 final EditText resetMail = new EditText(v.getContext());
+
+
                 final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("Reset Password ?");
-                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setTitle("Enter Your Email");
+                //passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
                 passwordResetDialog.setView(resetMail);
 
-                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // extract the email and send reset link
@@ -146,7 +150,7 @@ public class sign_in extends AppCompatActivity {
                     }
                 });
 
-                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close the dialog

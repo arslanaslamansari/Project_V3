@@ -17,8 +17,6 @@
         <activity android:name=".Common.about_us"></activity>
         <activity android:name=".Common.Fav_Item_videoplayer" />
         <activity android:name=".Common.sign_in" />
-        <activity android:name=".Common.sign_up_3" />
-        <activity android:name=".Common.sign_up_2" />
         <activity android:name=".Common.sign_up" />
         <activity android:name=".Admin.user_Profile" />
         <activity android:name=".Common.History" />

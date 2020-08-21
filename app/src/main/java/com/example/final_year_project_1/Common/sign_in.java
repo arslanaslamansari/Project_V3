@@ -84,7 +84,7 @@ public class sign_in extends AppCompatActivity {
                 //progressBar.setVisibility(View.VISIBLE);
 
                 // authenticate the user
-                Toast.makeText(sign_in.this, "ok", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(sign_in.this, "ok", Toast.LENGTH_SHORT).show();
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

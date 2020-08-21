@@ -65,7 +65,7 @@ public class sign_up extends AppCompatActivity {
         //Hooks for animation
         backBtn = findViewById(R.id.signup_back_button);
         // next = findViewById(R.id.signup_button);
-        login = findViewById(R.id.signup_login_button);
+        //login = findViewById(R.id.signup_login_button);
         full_name = findViewById(R.id.signup_fullname);
         user_name = findViewById(R.id.signup_username);
         user_email = findViewById(R.id.signup_email);

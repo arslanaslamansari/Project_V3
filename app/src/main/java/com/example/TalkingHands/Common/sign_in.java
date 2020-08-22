@@ -1,4 +1,4 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,9 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.final_year_project_1.Admin.MainActivity;
-import com.example.final_year_project_1.Admin.user_Profile;
-import com.example.final_year_project_1.R;
+import com.example.TalkingHands.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,8 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class sign_in extends AppCompatActivity {
     // EditText user_email,user_password;

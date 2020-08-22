@@ -1,11 +1,8 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,9 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.final_year_project_1.Admin.MainActivity;
-import com.example.final_year_project_1.Admin.user_Profile;
-import com.example.final_year_project_1.R;
+import com.example.TalkingHands.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

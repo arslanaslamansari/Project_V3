@@ -1,11 +1,11 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.final_year_project_1.R;
+import com.example.TalkingHands.R;
 
 public class about_us extends AppCompatActivity {
 

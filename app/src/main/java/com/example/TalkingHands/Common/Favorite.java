@@ -1,8 +1,7 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.final_year_project_1.Helper_Classes.Favorite_Adapter;
-import com.example.final_year_project_1.Helper_Classes.MyAdapter;
-import com.example.final_year_project_1.R;
+import com.example.TalkingHands.Database.FavoriteData;
+import com.example.TalkingHands.Helper_Classes.Favorite_Adapter;
+import com.example.TalkingHands.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

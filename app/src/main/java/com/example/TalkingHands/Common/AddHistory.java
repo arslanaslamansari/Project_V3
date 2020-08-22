@@ -1,5 +1,6 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
+import com.example.TalkingHands.Database.HistoryData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

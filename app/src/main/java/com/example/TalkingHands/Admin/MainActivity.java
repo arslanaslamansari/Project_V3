@@ -1,4 +1,4 @@
-package com.example.final_year_project_1.Admin;
+package com.example.TalkingHands.Admin;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -9,7 +9,6 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -32,15 +31,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.final_year_project_1.Common.AddHistory;
-import com.example.final_year_project_1.Common.AddToFavourite;
-import com.example.final_year_project_1.Common.Favorite;
-import com.example.final_year_project_1.Common.History;
-import com.example.final_year_project_1.Common.about_us;
-import com.example.final_year_project_1.Common.sign_in;
-import com.example.final_year_project_1.Helper_Classes.offline_search_helper_class;
-import com.example.final_year_project_1.Helper_Classes.online_search_helper_class;
-import com.example.final_year_project_1.R;
+import com.example.TalkingHands.Common.AddHistory;
+import com.example.TalkingHands.Common.AddToFavourite;
+import com.example.TalkingHands.Common.Favorite;
+import com.example.TalkingHands.Common.History;
+import com.example.TalkingHands.Common.about_us;
+import com.example.TalkingHands.Common.sign_in;
+import com.example.TalkingHands.Common.user_Profile;
+import com.example.TalkingHands.Database.offline_search_helper_class;
+import com.example.TalkingHands.Database.online_search_helper_class;
+import com.example.TalkingHands.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 } else {
                     new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
-                            .setTitleText("Online Mode to use this feature")
+                            .setTitleText("Connect with internet to use this feature")
                             .show();
 
                 }
@@ -273,10 +273,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void offline_search() {
         search = editText.getText().toString().trim();
         offline_search_helper_class object = new offline_search_helper_class();
+        int oflineuri;
+        oflineuri= object.search(search);
 
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + object.search(search)));
-        videoView.requestFocus();
-        videoView.start();
+        if(oflineuri!=0){
+            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + oflineuri));
+            videoView.requestFocus();
+            videoView.start();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Sign not Available", LENGTH_SHORT).show();
+
+        }
     }
 
     private void online_search(String onlinesearch) {
@@ -342,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.start));
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.thumbnail));
         videoView.requestFocus();
         videoView.start();
 
@@ -527,4 +535,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     };
+
+
+    /*public void reportsign(View view){
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto","email@email.com", null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Invalid sign");
+        intent.putExtra(Intent.EXTRA_TEXT, uri);
+        startActivity(Intent.createChooser(intent, "tripea009@gmail.com"));
+    }*/
 }

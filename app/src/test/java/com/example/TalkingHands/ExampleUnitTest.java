@@ -1,4 +1,4 @@
-package com.example.final_year_project_1;
+package com.example.TalkingHands;
 
 import org.junit.Test;
 

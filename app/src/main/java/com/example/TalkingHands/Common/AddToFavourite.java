@@ -1,19 +1,9 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.final_year_project_1.Helper_Classes.Favorite_Adapter;
+import com.example.TalkingHands.Database.FavoriteData;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 public class AddToFavourite {
     FirebaseDatabase database;

@@ -1,4 +1,4 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Database;
 
 import android.net.Uri;
 

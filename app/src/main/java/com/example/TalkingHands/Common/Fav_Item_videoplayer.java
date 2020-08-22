@@ -1,4 +1,4 @@
-package com.example.final_year_project_1.Common;
+package com.example.TalkingHands.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.example.final_year_project_1.R;
-
-import static android.widget.Toast.LENGTH_SHORT;
+import com.example.TalkingHands.R;
 
 public class Fav_Item_videoplayer extends AppCompatActivity {
     VideoView videoView;

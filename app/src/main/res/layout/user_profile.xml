@@ -64,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Arslan"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -95,7 +94,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat"
-                android:text="arslanaslam"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -126,7 +124,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat"
-                android:text="arslan@aaa.com"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

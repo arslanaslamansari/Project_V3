@@ -209,7 +209,6 @@ public class sign_up extends AppCompatActivity {
                 //"(?=.*[0-9])" +         //at least 1 digit
                 //"(?=.*[a-z])" +         //at least 1 lower case letter
                 //"(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
                 "(?=\\S+$)" +           //no white spaces
                 ".{6,}" +               //at least 6 characters
                 "$";

@@ -215,6 +215,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     online_search(keeper);
                     //Toast.makeText(getApplicationContext(), "result" + keeper, LENGTH_SHORT).show();
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), "Speak Again", LENGTH_SHORT).show();
+
+                }
             }
 
             @Override
@@ -248,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         break;
                 }*/
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     float reducedvalue = (float) 1.3;
                     mic_button.setScaleX(reducedvalue);
@@ -311,6 +316,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             uri = online_object.search(onlinesearch);
 
             if (uri != null) {
+
+                favorite_button.setClickable(true);
                 videoView.setVideoURI(uri);
                 //Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
                 videoView.requestFocus();

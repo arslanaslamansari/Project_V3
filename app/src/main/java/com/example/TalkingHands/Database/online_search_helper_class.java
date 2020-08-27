@@ -8,7 +8,7 @@ public class online_search_helper_class {
     VideoView videoView;
 
     public Uri search(String search) {
-        //Toast.makeText(Context, "we are in uri search", LENGTH_SHORT).show();
+        // Alphabet search
         if (search.equals("ا") || search.equals("الف")) {
             return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/Alphabet%2F1%20alif.mp4?alt=media&token=660aa2f1-eedb-4cbb-b6a4-16630f49c2c4");
         } else if (search.equals("ب")|| search.equals("بے")) {
@@ -85,7 +85,47 @@ public class online_search_helper_class {
             return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/Alphabet%2F35%20ya.mp4?alt=media&token=083253e6-8d60-43db-aca6-09f6df5e8109");
         }else if (search.equals("ے")|| search.equals("بڑی يے")) {
             return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/Alphabet%2F36%20ya.mp4?alt=media&token=3f91fab0-9edf-4c75-bad0-f3fb1c035970");
-        } else
+        } else if(search.equals("برا")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fbad.mp4?alt=media&token=04f46f26-cdd1-4d23-93b8-40ce076a2c70");
+        }else if(search.equals("بڑا")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fbig.mp4?alt=media&token=6667cb01-d7cf-4c05-900e-bdb295b35e64");
+        }else if(search.equals("سیاہ")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fblack.mp4?alt=media&token=0d03543f-48c6-48ec-b63f-fd49293df3bb");
+        }else if(search.equals("شاندار")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fbrillient.mp4?alt=media&token=79b8fb3c-24fd-4b71-a6f5-3dc69dc6958a");
+        }else if(search.equals("ٹوٹاھوا")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fbroken.mp4?alt=media&token=b04f7f15-351a-4ba4-b4e4-032333bd16d8");
+        }else if(search.equals("مصروف")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fbussy.mp4?alt=media&token=db1ec646-6e18-49b4-a7cd-68210e98c15b");
+        }else if(search.equals("ای میل")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Femail.mp4?alt=media&token=96b47b30-9c85-4d44-a827-1ca130abf9e5");
+        }else if(search.equals("چہرہ")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fface.mp4?alt=media&token=f8199aa4-d61a-482e-998e-df968c8dfd35");
+        }else if(search.equals("پرچم")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fflag.mp4?alt=media&token=aa95df2b-5680-4390-ae7c-1e0a1f382c0f");
+        }else if(search.equals("پیشانی")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fforehead.mp4?alt=media&token=3612ecee-58a1-4c77-8789-ad82f461aac2");
+        }else if(search.equals("گوگل")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fgoogle.mp4?alt=media&token=f8bca3c2-12d0-429c-9686-bc7dd5d53d0e");
+        }else if(search.equals("سر")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fhead.mp4?alt=media&token=1e3e7fcc-d0ae-45b9-afe7-a9ab60a87c38");
+        }else if(search.equals("ہیلو")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fhello.mp4?alt=media&token=529fb98c-88e6-4f11-957f-f138cdc8c495");
+        }else if(search.equals("میں")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fi.mp4?alt=media&token=79da47b2-56f3-463a-9f2c-04b511878b5f");
+        }else if(search.equals("رس")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fjuice.mp4?alt=media&token=a583517f-f862-48f4-b618-17c9718da509");
+        }else if(search.equals("چائے")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Ftea.mp4?alt=media&token=f597f02a-a4d5-47c4-9b17-9066f4327d20");
+        }else if(search.equals("شکریہ")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fthank%20you.mp4?alt=media&token=f6514845-92f0-46e9-a52e-76189390ad54");
+        }else if(search.equals("کیا")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fwhat.mp4?alt=media&token=6069f4a1-a962-4ba5-a909-966d14cd94f1");
+        }else if(search.equals("سفید")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fwhite.mp4?alt=media&token=d009b517-6966-4c5e-96db-ab7127130d3d");
+        }else if(search.equals("آپ")){
+            return Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-d13e1.appspot.com/o/words%2Fyou.mp4?alt=media&token=1b24c113-bcd7-4b6f-b069-27a8b8da61f0");
+        }else
             return null;
     }
 }

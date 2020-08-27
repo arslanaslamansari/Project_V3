@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     VideoView videoView;
     EditText editText;
     TextView txvResult;
-    Button home_menu, mic_button1;
+    Button home_menu, mic_button1,report_button;
     ImageView favorite_button, btn, mic_button;
     protected ImageView menu_icon;
     ProgressDialog dialog;
@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         videoView = findViewById(R.id.videoView);
         editText = findViewById(R.id.editText);
         btn = findViewById(R.id.btn1);
+        report_button=findViewById(R.id.reportbtnn);
+
 
         mic_button = findViewById(R.id.btnSpeak);
         //mic_button1 = findViewById(R.id.btnSpeak1);
@@ -140,15 +142,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 if (connected(MainActivity.this)) {
                     if (fAuth.getCurrentUser() != null) {
-                        if (!search.isEmpty()) {
-                            if (uri != null) {
-                                AddToFavourite fav = new AddToFavourite(search, uri.toString());
-                                Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
-                                favorite_button.setClickable(false);
-                            }
-                        } else {
-
-                        }
+                        AddToFavourite fav = new AddToFavourite(search, uri.toString());
+                        Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
+                        favorite_button.setClickable(false);
                     } else {
                         new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                                 .setTitleText("Login to Use this feature")
@@ -163,6 +159,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
+        report_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (connected(MainActivity.this)) {
+
+                    if (fAuth.getCurrentUser() != null) {
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                "mailto","tripea009@gmail.com", null));
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Invalid sign");
+                        startActivity(Intent.createChooser(intent, fAuth.getCurrentUser().toString()));
+                        report_button.setVisibility(View.GONE);
+                    } else {
+                        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                                .setTitleText("Login to Use this feature")
+                                .show();
+
+                    }
+
+
+                } else {
+                    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("Connect with internet to use this feature")
+                            .show();
+
+                }
+            }
+        });
+
+
 
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -309,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (onlinesearch.isEmpty()) {
         } else {
             progressBar.setVisibility(View.VISIBLE);
+
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
@@ -318,6 +346,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (uri != null) {
 
                 favorite_button.setClickable(true);
+                report_button.setClickable(true);
                 videoView.setVideoURI(uri);
                 //Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
                 videoView.requestFocus();
@@ -334,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
                                 // TODO Auto-generated method stub
                                 progressBar.setVisibility(View.GONE);
-                                favorite_button.setVisibility(View.VISIBLE);
+                                report_button.setVisibility(View.VISIBLE);
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 mp.start();
                             }
@@ -544,11 +573,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
 
 
-    /*public void reportsign(View view){
-        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto","email@email.com", null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Invalid sign");
-        intent.putExtra(Intent.EXTRA_TEXT, uri);
-        startActivity(Intent.createChooser(intent, "tripea009@gmail.com"));
-    }*/
+    public void reportsign(View view){
+
+
+        /*Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "triplea009@gmail.com"});
+        email.putExtra(Intent.EXTRA_SUBJECT, "invalid sign");
+        //email.putExtra(Intent.EXTRA_TEXT, message);
+
+//need this to prompts email client only
+        email.setType("message/rfc822");
+        String userid=fAuth.getCurrentUser().toString();
+        startActivity(Intent.createChooser(email, userid));*/
+    }
 }

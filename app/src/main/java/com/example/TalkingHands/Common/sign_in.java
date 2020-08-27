@@ -35,6 +35,8 @@ public class sign_in extends AppCompatActivity {
     TextInputLayout user_email, user_password;
     public static final String TAG = "TAG";
 
+    public static sign_in obj;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,58 +54,48 @@ public class sign_in extends AppCompatActivity {
 
         forgot_password = findViewById(R.id.forget_password);
 
+        obj = this;
+
 
         signin_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
 
                 String email = user_email.getEditText().getText().toString().trim();
                 String password = user_password.getEditText().getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     user_email.setError("Email is Required.");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)) {
+                } else if (TextUtils.isEmpty(password)) {
                     user_password.setError("Password is Required.");
-                    return;
-                }
+                } else {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(sign_in.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), user_Profile.class);
+                                //progressBar.setVisibility(View.GONE);
 
-                if (password.length() < 6) {
-                    user_password.setError("Password Must be >= 6 Characters");
-                    return;
-                }
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                //progressBar.setVisibility(View.VISIBLE);
+                                Toast.makeText(sign_in.this, "try again", Toast.LENGTH_SHORT).show();
 
-                // authenticate the user
-               // Toast.makeText(sign_in.this, "ok", Toast.LENGTH_SHORT).show();
-                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(sign_in.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), user_Profile.class);
-                            //progressBar.setVisibility(View.GONE);
-
-                            startActivity(i);
-                            finish();
-                        } else {
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            // Toast.makeText(sign_in.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                            Toast.makeText(sign_in.this, "try again", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
-
-                    }
-                });
-
+                    });
+                }
             }
         });
 
@@ -159,6 +151,23 @@ public class sign_in extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean validateEmail() {
+        String val = user_email.getEditText().getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (val.isEmpty()) {
+            user_email.setError("Field cannot be empty");
+            return false;
+        } else if (!val.matches(emailPattern)) {
+            user_email.setError("Invalid email address");
+            return false;
+        } else {
+            user_email.setError(null);
+            user_email.setErrorEnabled(false);
+            return true;
+        }
     }
 
     public void back_btn_login(View view) {

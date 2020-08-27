@@ -135,6 +135,7 @@ public class sign_up extends AppCompatActivity {
 
                                 Intent i = new Intent(getApplicationContext(), user_Profile.class);
                                 startActivity(i);
+                                sign_in.obj.finish();
                                 finish();
                             } else {
                                 Toast.makeText(sign_up.this, "Error ! ", Toast.LENGTH_SHORT).show();
@@ -227,8 +228,7 @@ public class sign_up extends AppCompatActivity {
     }
 
     public void signup_back_button(View view) {
-        Intent intent = new Intent(sign_up.this, sign_in.class);
-        startActivity(intent);
+        finish();
     }
 
 

@@ -154,17 +154,20 @@
             app:layout_constraintStart_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/view2" />
 
-        <!--<Button
+        <Button
             android:id="@+id/reportbtnn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_width="62dp"
+            android:layout_height="39dp"
+            android:onClick="reportsign"
             android:text="Report"
+            android:textSize="8dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/menu_icon"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.042"
-            android:onClick="reportsign"/>-->
+            app:layout_constraintVertical_bias="0.058" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (fAuth.getCurrentUser() != null) {
                         AddToFavourite fav = new AddToFavourite(search, uri.toString());
                         Toast.makeText(getApplicationContext(), "Added to Favorite", LENGTH_SHORT).show();
-                        favorite_button.setClickable(false);
+                        favorite_button.setVisibility(View.GONE);
                     } else {
                         new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                                 .setTitleText("Login to Use this feature")
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if (uri != null) {
 
-                favorite_button.setClickable(true);
+
                 report_button.setClickable(true);
                 videoView.setVideoURI(uri);
                 //Toast.makeText(getApplicationContext(), "accessed", LENGTH_SHORT).show();
@@ -362,6 +362,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void onVideoSizeChanged(MediaPlayer mp, int arg1, int arg2) {
                                 // TODO Auto-generated method stub
+                                favorite_button.setVisibility(View.VISIBLE);
                                 progressBar.setVisibility(View.GONE);
                                 report_button.setVisibility(View.VISIBLE);
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -377,6 +378,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                         .setTitleText("Sign Not Available")
                         .show();
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 //Toast.makeText(getApplicationContext(), "Sign Not Found", LENGTH_SHORT).show();
             }
         }

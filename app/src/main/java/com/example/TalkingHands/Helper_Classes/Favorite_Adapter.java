@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,10 +50,10 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.FavV
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(context, Fav_Item_videoplayer.class);
-                i.putExtra("VideoUri", uri);
+                i.putExtra("VideoUri", FavData.get(position).geturi());
                 context.startActivity(i);
             }
         });
@@ -60,7 +61,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.FavV
         holder.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Recycle Click"+position, Toast.LENGTH_SHORT).show();
                 FirebaseDatabase database;
                 DatabaseReference reference;
                 FirebaseAuth firebaseAuth;
@@ -71,11 +72,11 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.FavV
 
                 database = FirebaseDatabase.getInstance();
                 reference = database.getReference().child("favorite");
-                reference.child(userId).child(key).removeValue();
-                /*FavData.remove(position);
+                reference.child(userId).child(FavData.get(position).getfav()).removeValue();
+                FavData.remove(position);
                 notifyDataSetChanged();
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();*/
+                //FirebaseStorage storage = FirebaseStorage.getInstance();
         }
         });
 
